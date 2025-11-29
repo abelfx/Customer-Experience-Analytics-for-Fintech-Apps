@@ -37,7 +37,7 @@ class PlayStoreScraper:
 
         for attempt in range(1, self.max_retries + 1):
             try:
-                reviews = reviews(
+                scraped_reviews = reviews(
                     app_id,
                     lang=self.language,
                     country=self.country,
@@ -45,8 +45,8 @@ class PlayStoreScraper:
                     count=count,
                     filter_score_with=None
                 )
-                print(f"Successfully fetched {len(reviews)} reviews for {app_id}")
-                return reviews
+                print(f"Successfully fetched {len(scraped_reviews)} reviews for {app_id}")
+                return scraped_reviews
             except Exception as e:
                 print(f"Attempt {attempt} failed for {app_id}: {e}")
                 if attempt < self.max_retries:
@@ -62,22 +62,14 @@ class PlayStoreScraper:
         processed_reviews = []
 
         for review in tqdm(raw_reviews):
-                processed_review = {
-                    "review_id": review.get("reviewId", ''),
-                    "user_name": review.get("userName", ''),
-                    "content": review.get("content"),
-                    "rating": review.get("score", ''),
-                    "thumbs_up_count": review.get("thumbsUpCount"),
-                    "review_date": review.get("at", datetime.now()),
-                    "review_created_version": review.get("reviewCreatedVersion"),
-                    "thumbs_up": review.get("thumbsUpCount", 0),
-                    "reply_content": review.get("replyContent"),
-                    "replied_at": review.get("repliedAt"),
-                    "app_id": review.get("appId"),
-                    "bank_name": self.bank_names.get(review.get("appId"), "Unknown Bank")
-                }
-
-                processed_reviews.append(processed_review)
+            processed_review = {
+                "review_text": review.get("content"),
+                "rating": review.get("score", ''),
+                "date": review.get("at", datetime.now()),
+                "bank_app_name": self.bank_names.get(review.get("appId"), "Unknown Bank"),
+                "source": "Google Play"
+            }
+            processed_reviews.append(processed_review)
 
         print(f"Processed {len(processed_reviews)} reviews.")
         return processed_reviews
@@ -127,3 +119,12 @@ class PlayStoreScraper:
         print(f"Saved app metadata to {meta_save_path}")
 
         return df_reviews
+    
+def main():
+    scraper = PlayStoreScraper()
+    all_reviews_df = scraper.scrape_all_banks()
+    print("Scraping completed.")
+    return all_reviews_df
+
+if __name__ == "__main__":
+    reviews_df = main()
