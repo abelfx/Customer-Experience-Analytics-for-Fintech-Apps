@@ -3,17 +3,17 @@ import os
 
 load_dotenv()
 
-# Configuration for bank app IDs and names
 APP_IDS = {
-	"CBE": os.getenv("CBE_ID"),
-	"BOA": os.getenv("BOA_ID"),
-	"Dashen": os.getenv("Dashen_Id")
+    "CBE": os.getenv("CBE_ID"),
+    "BOA": os.getenv("BOA_ID"),
+    "DASHEN": os.getenv("DASHEN_ID")
 }
 
-Bank_NAMES = {"CBE": "Commercial Bank of Ethiopia", 
-              "BOA": "Bank of Abyssinia", 
-              "Dashen": "Dashen Bank"}
-
+BANK_NAMES = {
+    "CBE": "Commercial Bank of Ethiopia",
+    "BOA": "Bank of Abyssinia",
+    "DASHEN": "Dashen Bank"
+}
 # Configuration for scraping parameters
 SCRAPING_CONFIG = {
     "reviews_per_bank": os.getenv("REVIEWS_PER_BANK", 400),
