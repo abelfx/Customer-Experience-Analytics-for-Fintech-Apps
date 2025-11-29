@@ -1,10 +1,11 @@
 import pandas as pd
 import numpy as np
-from google_play_scraper import Sort, reviews_all, app
+from google_play_scraper import Sort, reviews, app
 from config import APP_IDS, SCRAPING_CONFIG, DATA_PATHS, BANK_NAMES
 from datetime import datetime
 import os
 from tqdm import tqdm
+import time
 
 class PlayStoreScraper:
     # Initialize scraper with configuration
@@ -30,4 +31,27 @@ class PlayStoreScraper:
             print(f"Error fetching app info for {app_id}: {e}")
             return None
     
-        
+    # Fetch reviews for a given app
+    def scrape_reviews(self, app_id, count=0):
+        print(f"Scraping reviews for {app_id}...")
+
+        for attempt in range(1, self.max_retries + 1):
+            try:
+                reviews = reviews(
+                    app_id,
+                    lang=self.language,
+                    country=self.country,
+                    sort=Sort.NEWEST,
+                    count=count,
+                    filter_score_with=None
+                )
+                print(f"Successfully fetched {len(reviews)} reviews for {app_id}")
+                return reviews
+            except Exception as e:
+                print(f"Attempt {attempt} failed for {app_id}: {e}")
+                if attempt < self.max_retries:
+                    print(f"Retrying in 3 sec... ({attempt}/{self.max_retries})")
+                    time.sleep(3)
+                elif attempt == self.max_retries:
+                    print(f"Max retries reached for {app_id}. Skipping.")
+                    return []
