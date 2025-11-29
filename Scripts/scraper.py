@@ -55,3 +55,75 @@ class PlayStoreScraper:
                 elif attempt == self.max_retries:
                     print(f"Max retries reached for {app_id}. Skipping.")
                     return []
+    
+    # Process Reviews
+    def process_reviews(self, raw_reviews, app_id):
+        print("Processing reviews...")
+        processed_reviews = []
+
+        for review in tqdm(raw_reviews):
+                processed_review = {
+                    "review_id": review.get("reviewId", ''),
+                    "user_name": review.get("userName", ''),
+                    "content": review.get("content"),
+                    "rating": review.get("score", ''),
+                    "thumbs_up_count": review.get("thumbsUpCount"),
+                    "review_date": review.get("at", datetime.now()),
+                    "review_created_version": review.get("reviewCreatedVersion"),
+                    "thumbs_up": review.get("thumbsUpCount", 0),
+                    "reply_content": review.get("replyContent"),
+                    "replied_at": review.get("repliedAt"),
+                    "app_id": review.get("appId"),
+                    "bank_name": self.bank_names.get(review.get("appId"), "Unknown Bank")
+                }
+
+                processed_reviews.append(processed_review)
+
+        print(f"Processed {len(processed_reviews)} reviews.")
+        return processed_reviews
+    
+    # scrape all the banks
+    def scrape_all_banks(self):
+        all_reviews = []
+        all_metadata = []
+
+        for bank_code, app_id in self.app_ids.items():
+            print(f"Starting scrape for {bank_code} ({app_id})")
+
+            # Fetch app metadata
+            info = self.get_app_info(app_id)
+            if info:
+                print(f"App Name: {info.get('title')}, Installs: {info.get('installs')}")
+                info_dict = {
+                    "bank_code": bank_code,
+                    "app_id": app_id,
+                    "app_name": info.get("title"),
+                    "installs": info.get("installs"),
+                    "developer": info.get("developer"),
+                    "score": info.get("score"),
+                    "description": info.get("description"),
+                }
+                all_metadata.append(info_dict)
+
+            # Scrape reviews
+            raw_reviews = self.scrape_reviews(app_id, count=self.reviews_per_bank)
+            processed_reviews = self.process_reviews(raw_reviews, app_id)
+            all_reviews.extend(processed_reviews)
+
+        # Combine all reviews into a DataFrame
+        df_reviews = pd.DataFrame(all_reviews)
+        # Optionally, combine metadata into a DataFrame
+        df_metadata = pd.DataFrame(all_metadata)
+
+        # Save reviews to CSV using DATA_PATHS from config
+        reviews_path = DATA_PATHS.get("raw_reviews", "data/raw/raw_reviews.csv")
+        df_reviews.to_csv(reviews_path, index=False)
+        print(f"Saved all reviews to {reviews_path}")
+
+        # Optionally, save metadata
+        metadata_path = DATA_PATHS.get("processed", "data/processed/processed_reviews.csv")
+        meta_save_path = os.path.join(os.path.dirname(metadata_path), "app_metadata.csv")
+        df_metadata.to_csv(meta_save_path, index=False)
+        print(f"Saved app metadata to {meta_save_path}")
+
+        return df_reviews
