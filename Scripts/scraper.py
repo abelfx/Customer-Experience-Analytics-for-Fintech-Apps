@@ -62,10 +62,10 @@ class PlayStoreScraper:
 
         for review in tqdm(raw_reviews):
             processed_review = {
-                "review_text": review.get("content"),
+                "review": review.get("content"),
                 "rating": review.get("score", ''),
                 "date": review.get("at", datetime.now()),
-                "bank_app_name": self.bank_names.get(review.get("appId"), "Unknown Bank"),
+                "bank": self.bank_names.get(review.get("appId"), "Unknown Bank"),
                 "source": "Google Play"
             }
             processed_reviews.append(processed_review)
