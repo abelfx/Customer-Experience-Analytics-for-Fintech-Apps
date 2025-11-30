@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 from google_play_scraper import Sort, reviews, app
 from config import APP_IDS, SCRAPING_CONFIG, DATA_PATHS, BANK_NAMES
 from datetime import datetime
@@ -98,7 +97,7 @@ class PlayStoreScraper:
                 all_metadata.append(info_dict)
 
             # Scrape reviews
-            raw_reviews = self.scrape_reviews(app_id, count=self.reviews_per_bank)
+                raw_reviews, _ = self.scrape_reviews(app_id, count=self.reviews_per_bank)
             processed_reviews = self.process_reviews(raw_reviews, app_id)
             all_reviews.extend(processed_reviews)
 
@@ -113,7 +112,7 @@ class PlayStoreScraper:
         print(f"Saved all reviews to {reviews_path}")
 
         # Optionally, save metadata
-        metadata_path = DATA_PATHS.get("processed", "data/processed/processed_reviews.csv")
+        metadata_path = DATA_PATHS.get("processed", "data/raw/processed_reviews.csv")
         meta_save_path = os.path.join(os.path.dirname(metadata_path), "app_metadata.csv")
         df_metadata.to_csv(meta_save_path, index=False)
         print(f"Saved app metadata to {meta_save_path}")

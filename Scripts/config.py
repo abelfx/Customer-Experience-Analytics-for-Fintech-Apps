@@ -9,6 +9,8 @@ APP_IDS = {
     "DASHEN": os.getenv("DASHEN_ID")
 }
 
+print(APP_IDS)
+
 BANK_NAMES = {
     "CBE": "Commercial Bank of Ethiopia",
     "BOA": "Bank of Abyssinia",
