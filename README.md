@@ -153,24 +153,6 @@ cd customer_experience_analytics
 - `scripts/db_insert.py` – Python script to populate database
 - SQL schema dump committed to GitHub for reproducibility
 
-## Usage
-
-1. Clone the repository:
-```bash
-git clone https://github.com/<username>/customer_experience_analytics.git
-cd customer_experience_analytics
-```
-2. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
-3. Run `scraper.py` to collect reviews
-4. Execute `EDA_preprocessing.ipynb` for cleaning
-5. Execute `sentiment_thematic_analysis.ipynb` for sentiment & theme analysis
-6. Run `insert_reviews.py` to populate PostgreSQL database
-
----
-
 **Insight Extraction:**
 
 - Identified **drivers** and **pain points** per bank:
@@ -199,6 +181,25 @@ pip install -r requirements.txt
 - Annotated visualizations 
 - Draft report with insights and recommendations prepared for stakeholder review.
 
+
+## Usage
+
+1. Clone the repository:
+```bash
+git clone https://github.com/<username>/customer_experience_analytics.git
+cd customer_experience_analytics
+```
+2. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
+3. Run `scraper.py` to collect reviews
+4. Execute `EDA_preprocessing.ipynb` for cleaning
+5. Execute `sentiment_thematic_analysis.ipynb` for sentiment & theme analysis
+6. Run `insert_reviews.py` to populate PostgreSQL database
+
+---
+
 **KPIs Achieved:**
 - 1,200 reviews collected with <5% missing data.
 - Sentiment scores computed for all reviews.
@@ -214,5 +215,6 @@ pip install -r requirements.txt
 **Team & Contributors**
 
 - Abel Tesfa – Data Analyst
+
 
 
