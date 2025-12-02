@@ -22,7 +22,7 @@ This project analyzes customer satisfaction with mobile banking apps by collecti
 
 ---
 
-## Week 1: Data Collection & Preprocessing
+## Data Collection & Preprocessing
 
 **Tasks Completed:**
 
@@ -44,7 +44,7 @@ This project analyzes customer satisfaction with mobile banking apps by collecti
 
 ---
 
-## Week 2: Sentiment and Thematic Analysis
+## Sentiment and Thematic Analysis
 
 **Sentiment Analysis:**
 
@@ -72,55 +72,9 @@ This project analyzes customer satisfaction with mobile banking apps by collecti
 - Modular pipeline: preprocessing → sentiment → thematic clustering.
 - Results saved to `reviews_with_sentiment_themes.csv`.
 
-
-## Project Structure
-```
-customer_experience_analytics/
-├── data/
-│ ├── raw/
-│ └── processed/
-├── Scripts
-│ ├── __init__.py  # configuration for the project
-│ ├── scraper.py # Task 1: Data scraping
-│ ├── insert_reviews.py # Task 3: inserts reviews to postgres tables
-├── notebooks/
-│ ├── EDA_preprocessing.ipynb # Task 1: pre_processing and cleaning of the data
-│ ├── sentiment_thematic_analysis.ipynb # Task 2: sentiment analysis
-├── db/
-│ ├── __init__.py 
-│ ├── connection.py # Task 3: Connection to the database
-│ ├── create_tables.sql # Task 3: Table creation queries
-│ ├── seed_banks.sql
-├── tests/
-├── config/
-│ ├── config.yaml
-├── README.md
-├── requirements.txt
-└── .gitignore
-```
-
-
 ---
 
-## Usage
-
-1. Clone the repository:
-
-```bash
-git clone https://github.com/<username>/customer_experience_analytics.git
-cd customer_experience_analytics
-```
-
-2. Install Dependencies
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. run Scraper.py
-4. run EDA_preprocessing.ipynb
-5. run sentiment_thematic_analysis.ipynb
-
-
-**PostgreSQL Integration:**
+## PostgreSQL Integration:
 
 - Installed PostgreSQL and created database `bank_reviews`.
 - Defined schema with two tables:
@@ -161,7 +115,7 @@ cd customer_experience_analytics
 - `scripts/db_insert.py` – Python script to populate database
 - SQL schema dump committed to GitHub for reproducibility
 
-**Insight Extraction:**
+## Insight Extraction:
 
 - Identified **drivers** and **pain points** per bank:
   - Example Drivers: fast navigation, clear UI, feature availability.
@@ -188,6 +142,32 @@ cd customer_experience_analytics
 
 - Annotated visualizations 
 - Draft report with insights and recommendations prepared for stakeholder review.
+
+## Project Structure
+```
+customer_experience_analytics/
+├── data/
+│ ├── raw/
+│ └── processed/
+├── Scripts
+│ ├── __init__.py  # configuration for the project
+│ ├── scraper.py # Task 1: Data scraping
+│ ├── insert_reviews.py # Task 3: inserts reviews to postgres tables
+├── notebooks/
+│ ├── EDA_preprocessing.ipynb # Task 1: pre_processing and cleaning of the data
+│ ├── sentiment_thematic_analysis.ipynb # Task 2: sentiment analysis
+├── db/
+│ ├── __init__.py 
+│ ├── connection.py # Task 3: Connection to the database
+│ ├── create_tables.sql # Task 3: Table creation queries
+│ ├── seed_banks.sql
+├── tests/
+├── config/
+│ ├── config.yaml
+├── README.md
+├── requirements.txt
+└── .gitignore
+```
 
 
 ## Usage
@@ -223,6 +203,7 @@ pip install -r requirements.txt
 **Team & Contributors**
 
 - Abel Tesfa – Data Analyst
+
 
 
 
