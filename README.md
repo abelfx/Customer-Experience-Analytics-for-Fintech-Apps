@@ -80,12 +80,20 @@ customer_experience_analytics/
 │ ├── raw/
 │ └── processed/
 ├── Scripts
-│ ├── config.py  # configuration for the project
+│ ├── __init__.py  # configuration for the project
 │ ├── scraper.py # Task 1: Data scraping
+│ ├── insert_reviews.py # Task 3: inserts reviews to postgres tables
 ├── notebooks/
 │ ├── EDA_preprocessing.ipynb # Task 1: pre_processing and cleaning of the data
 │ ├── sentiment_thematic_analysis.ipynb # Task 2: sentiment analysis
+├── db/
+│ ├── __init__.py 
+│ ├── connection.py # Task 3: Connection to the database
+│ ├── create_tables.sql # Task 3: Table creation queries
+│ ├── seed_banks.sql
 ├── tests/
+├── config/
+│ ├── config.yaml
 ├── README.md
 ├── requirements.txt
 └── .gitignore
@@ -215,6 +223,7 @@ pip install -r requirements.txt
 **Team & Contributors**
 
 - Abel Tesfa – Data Analyst
+
 
 
 
