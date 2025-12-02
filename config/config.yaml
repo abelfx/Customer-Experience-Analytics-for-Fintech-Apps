@@ -3,4 +3,4 @@ postgres:
   port: 5432
   database: bank_reviews
   user: postgres
-  password: YOUR_PASSWORD
+  password: Ab12el34te56sf78@
