@@ -112,18 +112,107 @@ cd customer_experience_analytics
 5. run sentiment_thematic_analysis.ipynb
 
 
-## Next Steps
+**PostgreSQL Integration:**
 
-- Task 3: Store cleaned reviews in PostgreSQL.
-- Task 4: Generate visualizations and actionable insights for bank app improvement.
+- Installed PostgreSQL and created database `bank_reviews`.
+- Defined schema with two tables:
 
-## KPIs Achieved So Far
+**Banks Table:**
+| Column    | Type | Description |
+|-----------|------|-------------|
+| bank_id   | SERIAL PRIMARY KEY | Unique bank identifier |
+| bank_name | VARCHAR | Bank name |
+| app_name  | VARCHAR | Mobile app name |
 
+**Reviews Table:**
+| Column          | Type | Description |
+|-----------------|------|-------------|
+| review_id       | SERIAL PRIMARY KEY | Unique review identifier |
+| bank_id         | INT REFERENCES banks(bank_id) | Link to banks table |
+| review_text     | TEXT | Review content |
+| rating          | INT | 1-5 star rating |
+| review_date     | DATE | Posting date |
+| sentiment_label | VARCHAR | Positive/Neutral/Negative |
+| sentiment_score | FLOAT | Confidence score |
+| theme_label     | VARCHAR | Assigned theme |
+| source          | VARCHAR | Review source (Google Play) |
+
+**Python Integration:**
+
+- Used `psycopg2` to connect and insert cleaned reviews into PostgreSQL.
+- Populated the database with all processed reviews from `reviews_with_sentiment_themes.csv`.
+
+**Verification Queries:**
+
+- Count reviews per bank
+- Average rating per bank
+- Example SQL: `SELECT bank_id, COUNT(*) AS total_reviews FROM reviews GROUP BY bank_id;`
+
+**File Outputs & Scripts:**
+
+- `scripts/db_insert.py` – Python script to populate database
+- SQL schema dump committed to GitHub for reproducibility
+
+## Usage
+
+1. Clone the repository:
+```bash
+git clone https://github.com/<username>/customer_experience_analytics.git
+cd customer_experience_analytics
+```
+2. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
+3. Run `scraper.py` to collect reviews
+4. Execute `EDA_preprocessing.ipynb` for cleaning
+5. Execute `sentiment_thematic_analysis.ipynb` for sentiment & theme analysis
+6. Run `insert_reviews.py` to populate PostgreSQL database
+
+---
+
+**Insight Extraction:**
+
+- Identified **drivers** and **pain points** per bank:
+  - Example Drivers: fast navigation, clear UI, feature availability.
+  - Example Pain Points: slow transfers, crashes, login issues.
+- Compared banks (CBE vs. BOA vs. Dashen) to highlight strengths and weaknesses.
+- Suggested actionable improvements per bank:
+  - Faster loading times
+  - Improved UI
+  - Budgeting and tracking tools
+
+**Visualizations:**
+
+- Created **3–5 plots** using Matplotlib/Seaborn:
+  - Sentiment trends over time
+  - Rating distributions per bank
+  - Keyword/theme clouds
+
+**Ethics & Bias Consideration:**
+
+- Noted potential review biases (e.g., negative skew, fake reviews).
+- Emphasized interpretation in context of data limitations.
+
+**Outputs:**
+
+- Annotated visualizations 
+- Draft report with insights and recommendations prepared for stakeholder review.
+
+**KPIs Achieved:**
 - 1,200 reviews collected with <5% missing data.
 - Sentiment scores computed for all reviews.
 - 3+ themes identified per bank with top keywords.
+- Working PostgreSQL connection established.
+- Both tables created and populated with >1,000 reviews.
+- Database schema documented in README.md.
+- At least **1 driver and 1 pain point per bank** identified.
+- Minimum **2 plots** created to visualize findings.
+- Report-ready insights to support app improvement strategies.
+
 
 **Team & Contributors**
 
 - Abel Tesfa – Data Analyst
+
 
